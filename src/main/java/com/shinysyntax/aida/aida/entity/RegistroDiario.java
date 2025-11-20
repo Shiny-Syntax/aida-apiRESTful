@@ -9,8 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,35 +18,38 @@ import jakarta.persistence.Table;
 public class RegistroDiario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "seq_id_registro_gen", sequenceName = "seq_id_registro", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_registro_gen")
     @Column(name = "id_registro")
     private Long id;
 
     private LocalDate dataRegistro;
 
-    private Integer escalaEmocional;
+    private Double escalaEmocional;
     private Integer tempoTela;
     private Integer pausasRealizadas;
 
     @Column(length = 400)
     private String observacoesColaborador;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String observacoesAIDA;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "colaborador_cpf_colaborador")
+    @JoinColumn(name = "cpf_colaborador")
     private Colaborador colaborador;
+
+    
 
     public RegistroDiario() {}
 
-    // getters and setters
+    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public LocalDate getDataRegistro() { return dataRegistro; }
     public void setDataRegistro(LocalDate dataRegistro) { this.dataRegistro = dataRegistro; }
-    public Integer getEscalaEmocional() { return escalaEmocional; }
-    public void setEscalaEmocional(Integer escalaEmocional) { this.escalaEmocional = escalaEmocional; }
+    public Double getEscalaEmocional() { return escalaEmocional; }
+    public void setEscalaEmocional(Double escalaEmocional) { this.escalaEmocional = escalaEmocional; }
     public Integer getTempoTela() { return tempoTela; }
     public void setTempoTela(Integer tempoTela) { this.tempoTela = tempoTela; }
     public Integer getPausasRealizadas() { return pausasRealizadas; }
@@ -57,4 +60,5 @@ public class RegistroDiario {
     public void setObservacoesAIDA(String observacoesAIDA) { this.observacoesAIDA = observacoesAIDA; }
     public Colaborador getColaborador() { return colaborador; }
     public void setColaborador(Colaborador colaborador) { this.colaborador = colaborador; }
+    
 }

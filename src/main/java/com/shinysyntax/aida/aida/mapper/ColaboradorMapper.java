@@ -11,7 +11,14 @@ public class ColaboradorMapper {
     public static Colaborador toEntity(ColaboradorRequest req) {
         if (req == null) return null;
         Colaborador c = new Colaborador();
-        c.setCpf(req.getCpf());
+        // CPF in DTO is a string; DB stores it as BIGINT
+        if (req.getCpf() != null) {
+            try {
+                c.setCpf(Long.valueOf(req.getCpf()));
+            } catch (NumberFormatException ex) {
+                throw new com.shinysyntax.aida.aida.exception.BadRequestException("cpf must be numeric");
+            }
+        }
         c.setNome(req.getNome());
         c.setEmail(req.getEmail());
         c.setTelefone(req.getTelefone());
@@ -31,7 +38,7 @@ public class ColaboradorMapper {
     public static ColaboradorResponse toResponse(Colaborador c) {
         if (c == null) return null;
         ColaboradorResponse r = new ColaboradorResponse();
-        r.setCpf(c.getCpf());
+        r.setCpf(c.getCpf() == null ? null : String.valueOf(c.getCpf()));
         r.setNome(c.getNome());
         r.setEmail(c.getEmail());
         r.setTelefone(c.getTelefone());

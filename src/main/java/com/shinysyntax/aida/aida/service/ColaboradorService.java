@@ -6,8 +6,8 @@ import com.shinysyntax.aida.aida.entity.Colaborador;
 
 public interface ColaboradorService {
     Colaborador create(Colaborador colaborador);
-    Colaborador update(String cpf, Colaborador colaborador);
-    Colaborador findByCpf(String cpf);
+    Colaborador update(Long cpf, Colaborador colaborador);
+    Colaborador findByCpf(Long cpf);
     List<Colaborador> findAll();
-    void delete(String cpf);
+    void delete(Long cpf);
 }

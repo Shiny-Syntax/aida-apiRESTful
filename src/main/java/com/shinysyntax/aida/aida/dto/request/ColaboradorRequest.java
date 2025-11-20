@@ -4,24 +4,28 @@ import java.time.LocalDate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class ColaboradorRequest {
 
-    @NotBlank
-    @Size(max = 11)
+    @NotBlank(message = "O CPF do colaborador é obrigatório.")
+    @Size(min = 11, max = 11, message = "O CPF do colaborador deve ter 11 caracteres.")
+    @Pattern(regexp = "\\d{11}", message = "O CPF deve conter apenas números (11 dígitos).")
     private String cpf;
 
-    @NotBlank
+    @NotBlank(message = "O nome do colaborador é obrigatório.")
     private String nome;
 
-    @Email
+    @Email(message = "O e-mail informado é inválido.")
     private String email;
+
+    @NotBlank(message = "O campo 'modalidade' é obrigatório e deve ser: PRESENCIAL, HÍBRIDO OU REMOTO")
+    private String modalidade;
 
     private String telefone;
     private LocalDate dataNascimento;
     private String cargo;
-    private String modalidade;
     private LocalDate dataAdmissao;
     private String problemaSaude;
     private String medicamentoUsoDiario;
