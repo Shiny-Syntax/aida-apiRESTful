@@ -26,21 +26,14 @@ import com.shinysyntax.aida.aida.repository.ColaboradorRepository;
 import com.shinysyntax.aida.aida.service.RegistroDiarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
-<<<<<<< HEAD
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-=======
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
->>>>>>> b91737a398d197c9a9584e9fbd38c840654268d0
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/registros")
 @Validated
-@Tag(name = "RegistrosDiarios", description = "Operações relacionadas aos registros diários")
 public class RegistroDiarioController {
 
     private final RegistroDiarioService service;
@@ -50,11 +43,6 @@ public class RegistroDiarioController {
         this.service = service; this.colaboradorRepository = colaboradorRepository;
     }
 
-    @Operation(summary = "Listar registros", description = "Retorna todos os registros diários")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
     @GetMapping
     @Operation(summary = "Listar registros", description = "Retorna todos os registros diários")
     @ApiResponses({
@@ -63,12 +51,6 @@ public class RegistroDiarioController {
     })
     public List<RegistroDiarioResponse> list() { return service.findAll().stream().map(RegistroDiarioMapper::toResponse).collect(Collectors.toList()); }
 
-    @Operation(summary = "Obter registro", description = "Retorna um registro diário pelo id")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Registro encontrado"),
-        @ApiResponse(responseCode = "404", description = "Registro não encontrado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
     @GetMapping("/{id}")
     @Operation(summary = "Obter registro", description = "Retorna registro diário por id")
     @ApiResponses({
@@ -80,14 +62,6 @@ public class RegistroDiarioController {
     })
     public RegistroDiarioResponse get(@Parameter(description = "ID do registro") @PathVariable Long id) { return RegistroDiarioMapper.toResponse(service.findById(id)); }
 
-    @Operation(summary = "Criar registro diário", description = "Cria um novo registro diário vinculado a um colaborador")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Registro criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos — algum campo obrigatório está nulo"),
-        @ApiResponse(responseCode = "422", description = "Erro de validação — dados do request inválidos"),
-        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
     @PostMapping
     @Operation(summary = "Criar registro", description = "Cria um registro diário vinculado a um colaborador (use colaboradorCpf)")
     @ApiResponses({
@@ -100,9 +74,7 @@ public class RegistroDiarioController {
     })
     public ResponseEntity<RegistroDiarioResponse> create(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do registro") @Valid @RequestBody RegistroDiarioRequest req) {
         String cpf = Objects.requireNonNull(req.getColaboradorCpf(), "colaboradorCpf must not be null");
-        long cpfLong;
-        try { cpfLong = Long.parseLong(cpf); } catch (NumberFormatException ex) { throw new ColaboradorNotFoundException("Colaborador not found: " + cpf); }
-        Colaborador c = colaboradorRepository.findById(cpfLong)
+        Colaborador c = colaboradorRepository.findById(cpf)
             .orElseThrow(() -> new ColaboradorNotFoundException("Colaborador not found: " + cpf));
         RegistroDiario saved = service.create(RegistroDiarioMapper.toEntity(req, c));
         RegistroDiarioResponse resp = RegistroDiarioMapper.toResponse(Objects.requireNonNull(saved));
@@ -111,14 +83,6 @@ public class RegistroDiarioController {
         return ResponseEntity.created(uri).body(resp);
     }
 
-    @Operation(summary = "Atualizar registro diário", description = "Atualiza um registro diário existente")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Registro atualizado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "422", description = "Erro de validação — dados do request inválidos"),
-        @ApiResponse(responseCode = "404", description = "Colaborador ou registro não encontrado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar registro", description = "Atualiza um registro diário existente (forneça colaboradorCpf)")
     @ApiResponses({
@@ -132,20 +96,12 @@ public class RegistroDiarioController {
     public RegistroDiarioResponse update(@Parameter(description = "ID do registro") @PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do registro") @Valid @RequestBody RegistroDiarioRequest req) {
         Objects.requireNonNull(id, "id must not be null");
         String cpf = Objects.requireNonNull(req.getColaboradorCpf(), "colaboradorCpf must not be null");
-        long cpfLong;
-        try { cpfLong = Long.parseLong(cpf); } catch (NumberFormatException ex) { throw new ColaboradorNotFoundException("Colaborador not found: " + cpf); }
-        Colaborador c = colaboradorRepository.findById(cpfLong)
+        Colaborador c = colaboradorRepository.findById(cpf)
             .orElseThrow(() -> new ColaboradorNotFoundException("Colaborador not found: " + cpf));
         RegistroDiario updated = service.update(id, RegistroDiarioMapper.toEntity(req, c));
         return RegistroDiarioMapper.toResponse(Objects.requireNonNull(updated));
     }
 
-    @Operation(summary = "Remover registro diário", description = "Remove um registro diário pelo id")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Registro removido com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Registro não encontrado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
     @DeleteMapping("/{id}")
     @Operation(summary = "Remover registro", description = "Remove registro diário por id")
     @ApiResponses({
