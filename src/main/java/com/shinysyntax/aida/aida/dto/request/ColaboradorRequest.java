@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Size;
 
 public class ColaboradorRequest {
 
-    @NotBlank
-    @Size(max = 11)
+    @NotBlank(message = "CPF é obrigatório")
+    @Size(max = 11, message = "CPF deve ter no máximo 11 caracteres")
     private String cpf;
 
-    @NotBlank
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
-    @Email
+    @Email(message = "Email inválido")
     private String email;
 
     private String telefone;

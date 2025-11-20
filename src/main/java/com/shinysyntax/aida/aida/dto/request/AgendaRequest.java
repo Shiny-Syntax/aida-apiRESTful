@@ -14,15 +14,15 @@ public class AgendaRequest {
 
     private String descricao;
 
-    @NotNull
-    @Future
+    @NotNull(message = "dataHora é obrigatório")
+    @Future(message = "dataHora deve ser uma data/hora futura")
     private LocalDateTime dataHora;
 
     private String prioridade;
     private String plataforma;
     private String status;
 
-    @NotBlank
+    @NotBlank(message = "colaboradorCpf é obrigatório")
     private String colaboradorCpf;
 
     // getters and setters

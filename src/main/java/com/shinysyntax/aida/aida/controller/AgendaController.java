@@ -25,6 +25,10 @@ import com.shinysyntax.aida.aida.mapper.AgendaMapper;
 import com.shinysyntax.aida.aida.repository.ColaboradorRepository;
 import com.shinysyntax.aida.aida.service.AgendaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -40,13 +44,35 @@ public class AgendaController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar agendas", description = "Retorna todas agendas")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     public List<AgendaResponse> list() { return service.findAll().stream().map(AgendaMapper::toResponse).collect(Collectors.toList()); }
 
     @GetMapping("/{id}")
-    public AgendaResponse get(@PathVariable Long id) { return AgendaMapper.toResponse(service.findById(id)); }
+    @Operation(summary = "Obter agenda", description = "Retorna agenda por id")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "404", description = "Agenda não encontrada"),
+        @ApiResponse(responseCode = "422", description = "Validation Error"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+    public AgendaResponse get(@Parameter(description = "ID da agenda") @PathVariable Long id) { return AgendaMapper.toResponse(service.findById(id)); }
 
     @PostMapping
-    public ResponseEntity<AgendaResponse> create(@Valid @RequestBody AgendaRequest req) {
+    @Operation(summary = "Criar agenda", description = "Cria uma nova agenda vinculada a um colaborador (use colaboradorCpf)")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Created"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "422", description = "Validation Error"),
+        @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+    public ResponseEntity<AgendaResponse> create(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados da agenda") @Valid @RequestBody AgendaRequest req) {
         String cpf = Objects.requireNonNull(req.getColaboradorCpf(), "colaboradorCpf must not be null");
         Colaborador c = colaboradorRepository.findById(cpf)
             .orElseThrow(() -> new ColaboradorNotFoundException("Colaborador not found: " + cpf));
@@ -58,7 +84,16 @@ public class AgendaController {
     }
 
     @PutMapping("/{id}")
-    public AgendaResponse update(@PathVariable Long id, @Valid @RequestBody AgendaRequest req) {
+    @Operation(summary = "Atualizar agenda", description = "Atualiza uma agenda existente (forneça colaboradorCpf)")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "404", description = "Agenda ou colaborador não encontrado"),
+        @ApiResponse(responseCode = "422", description = "Validation Error"),
+        @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+    public AgendaResponse update(@Parameter(description = "ID da agenda") @PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados da agenda") @Valid @RequestBody AgendaRequest req) {
         Objects.requireNonNull(id, "id must not be null");
         String cpf = Objects.requireNonNull(req.getColaboradorCpf(), "colaboradorCpf must not be null");
         Colaborador c = colaboradorRepository.findById(cpf)
@@ -68,5 +103,11 @@ public class AgendaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }
+    @Operation(summary = "Remover agenda", description = "Remove agenda por id")
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "No Content"),
+        @ApiResponse(responseCode = "404", description = "Agenda não encontrada"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+    public ResponseEntity<Void> delete(@Parameter(description = "ID da agenda") @PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }
 }

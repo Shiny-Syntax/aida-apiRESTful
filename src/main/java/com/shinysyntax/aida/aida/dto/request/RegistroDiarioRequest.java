@@ -10,11 +10,11 @@ import jakarta.validation.constraints.NotNull;
 public class RegistroDiarioRequest {
     
 
-    @NotNull
+    @NotNull(message = "dataRegistro é obrigatório")
     private LocalDate dataRegistro;
 
-    @Min(0)
-    @Max(9)
+    @Min(value = 0, message = "escalaEmocional mínimo é 0")
+    @Max(value = 9, message = "escalaEmocional máximo é 9")
     private Integer escalaEmocional;
 
     private Integer tempoTela;
@@ -22,7 +22,7 @@ public class RegistroDiarioRequest {
     private String observacoesColaborador;
     private String observacoesAIDA;
 
-    @NotBlank
+    @NotBlank(message = "colaboradorCpf é obrigatório")
     private String colaboradorCpf;
 
     // getters and setters
