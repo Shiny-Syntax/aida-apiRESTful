@@ -2,10 +2,13 @@ package com.shinysyntax.aida.aida.dto.response;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class AgendaResponse {
     private Long id;
     private String tipo;
     private String descricao;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dataHora;
     private String prioridade;
     private String plataforma;

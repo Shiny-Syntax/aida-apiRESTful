@@ -3,6 +3,7 @@ package com.shinysyntax.aida.aida.entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -19,8 +20,10 @@ import jakarta.persistence.Table;
 public class Colaborador {
 
     @Id
-    @Column(name = "cpf_colaborador", length = 11)
-    private String cpf;
+    @Column(name = "cpf_colaborador")
+    private Long cpf;
+
+    
 
     @Column(nullable = false)
     private String nome;
@@ -62,8 +65,9 @@ public class Colaborador {
     }
 
     // getters and setters
-    public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
+    public Long getCpf() { return cpf; }
+    public void setCpf(Long cpf) { this.cpf = cpf; }
+    
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
     public String getEmail() { return email; }

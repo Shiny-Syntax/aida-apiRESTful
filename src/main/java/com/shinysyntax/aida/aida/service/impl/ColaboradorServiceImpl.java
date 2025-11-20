@@ -24,7 +24,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
     }
 
     @Override
-    public Colaborador update(String cpf, Colaborador colaborador) {
+    public Colaborador update(Long cpf, Colaborador colaborador) {
         Objects.requireNonNull(cpf, "cpf must not be null");
         Objects.requireNonNull(colaborador, "colaborador must not be null");
         Colaborador existing = repo.findById(cpf).orElseThrow(() -> new ColaboradorNotFoundException("Colaborador not found: " + cpf));
@@ -41,7 +41,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
     }
 
     @Override
-    public Colaborador findByCpf(String cpf) {
+    public Colaborador findByCpf(Long cpf) {
         Objects.requireNonNull(cpf, "cpf must not be null");
         return repo.findById(cpf).orElseThrow(() -> new ColaboradorNotFoundException("Colaborador not found: " + cpf));
     }
@@ -50,6 +50,6 @@ public class ColaboradorServiceImpl implements ColaboradorService {
     public List<Colaborador> findAll() { return repo.findAll(); }
 
     @Override
-    public void delete(String cpf) { Objects.requireNonNull(cpf, "cpf must not be null"); repo.deleteById(cpf); }
+    public void delete(Long cpf) { Objects.requireNonNull(cpf, "cpf must not be null"); repo.deleteById(cpf); }
 
 }

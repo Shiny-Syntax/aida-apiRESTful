@@ -5,7 +5,7 @@ import com.shinysyntax.aida.aida.exception.BadRequestException;
 public enum AgendaStatus {
     AGENDADO("AGENDADO"),
     CANCELADO("CANCELADO"),
-    CONCLUIDO("CONCLUIDO"),
+    CONCLUIDO("CONCLUÍDO"),
     EM_ANDAMENTO("EM ANDAMENTO");
 
     private final String label;

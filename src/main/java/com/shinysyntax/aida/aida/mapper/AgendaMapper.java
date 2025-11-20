@@ -10,10 +10,14 @@ public class AgendaMapper {
     public static Agenda toEntity(AgendaRequest req, Colaborador colaborador) {
         if (req == null) return null;
         Agenda a = new Agenda();
-        a.setId(req.getId());
         a.setTipo(req.getTipo());
         a.setDescricao(req.getDescricao());
-        a.setDataHora(req.getDataHora());
+        // request now supplies an OffsetDateTime (ISO/Z). Convert to LocalDateTime for the entity.
+        if (req.getDataHora() != null) {
+            a.setDataHora(req.getDataHora().toLocalDateTime());
+        } else {
+            a.setDataHora(null);
+        }
         // map prioridade and status safely
         if (req.getPrioridade() != null) {
             a.setPrioridade(com.shinysyntax.aida.aida.enums.Priority.fromLabel(req.getPrioridade()));
@@ -37,7 +41,7 @@ public class AgendaMapper {
         r.setPlataforma(a.getPlataforma());
         r.setStatus(a.getStatus() == null ? null : a.getStatus().getLabel());
         if (a.getColaborador() != null) {
-            r.setColaboradorCpf(a.getColaborador().getCpf());
+            r.setColaboradorCpf(a.getColaborador().getCpf() == null ? null : String.valueOf(a.getColaborador().getCpf()));
             r.setColaboradorNome(a.getColaborador().getNome());
         }
         return r;

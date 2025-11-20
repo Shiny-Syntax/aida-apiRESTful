@@ -2,10 +2,13 @@ package com.shinysyntax.aida.aida.dto.response;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class RegistroDiarioResponse {
     private Long id;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataRegistro;
-    private Integer escalaEmocional;
+    private Double escalaEmocional;
     private Integer tempoTela;
     private Integer pausasRealizadas;
     private String observacoesColaborador;
@@ -18,8 +21,8 @@ public class RegistroDiarioResponse {
     public void setId(Long id) { this.id = id; }
     public LocalDate getDataRegistro() { return dataRegistro; }
     public void setDataRegistro(LocalDate dataRegistro) { this.dataRegistro = dataRegistro; }
-    public Integer getEscalaEmocional() { return escalaEmocional; }
-    public void setEscalaEmocional(Integer escalaEmocional) { this.escalaEmocional = escalaEmocional; }
+    public Double getEscalaEmocional() { return escalaEmocional; }
+    public void setEscalaEmocional(Double escalaEmocional) { this.escalaEmocional = escalaEmocional; }
     public Integer getTempoTela() { return tempoTela; }
     public void setTempoTela(Integer tempoTela) { this.tempoTela = tempoTela; }
     public Integer getPausasRealizadas() { return pausasRealizadas; }

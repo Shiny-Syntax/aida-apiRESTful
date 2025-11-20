@@ -17,7 +17,7 @@ public class RegistroDiarioMapper {
         RegistroDiario r = new RegistroDiario();
 
         r.setDataRegistro(req.getDataRegistro());
-        r.setEscalaEmocional(req.getEscalaEmocional());
+        r.setEscalaEmocional(req.getEscalaEmocional() == null ? null : req.getEscalaEmocional().doubleValue());
         r.setTempoTela(req.getTempoTela());
         r.setPausasRealizadas(req.getPausasRealizadas());
         r.setObservacoesColaborador(req.getObservacoesColaborador());
@@ -44,7 +44,7 @@ public class RegistroDiarioMapper {
         resp.setObservacoesAIDA(r.getObservacoesAIDA());
 
         if (r.getColaborador() != null) {
-            resp.setColaboradorCpf(r.getColaborador().getCpf());
+            resp.setColaboradorCpf(r.getColaborador().getCpf() == null ? null : String.valueOf(r.getColaborador().getCpf()));
             resp.setColaboradorNome(r.getColaborador().getNome());
         }
 

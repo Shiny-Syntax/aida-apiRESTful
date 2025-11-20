@@ -23,20 +23,32 @@ import com.shinysyntax.aida.aida.mapper.ColaboradorMapper;
 import com.shinysyntax.aida.aida.service.ColaboradorService;
 
 import io.swagger.v3.oas.annotations.Operation;
+<<<<<<< HEAD
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+=======
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+>>>>>>> b91737a398d197c9a9584e9fbd38c840654268d0
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/colaboradores")
 @Validated
+@Tag(name = "Colaboradores", description = "Operações relacionadas a colaboradores")
 public class ColaboradorController {
 
     private final ColaboradorService service;
 
     public ColaboradorController(ColaboradorService service) { this.service = service; }
 
+    @Operation(summary = "Listar colaboradores", description = "Retorna a lista de todos os colaboradores")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
+        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
     @GetMapping
     @Operation(summary = "Listar colaboradores", description = "Retorna todos os colaboradores cadastrados")
     @ApiResponses({
@@ -47,7 +59,14 @@ public class ColaboradorController {
         return service.findAll().stream().map(ColaboradorMapper::toResponse).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Obter colaborador", description = "Retorna os dados de um colaborador pelo CPF")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Colaborador encontrado"),
+        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
     @GetMapping("/{cpf}")
+<<<<<<< HEAD
     @Operation(summary = "Obter colaborador", description = "Retorna um colaborador por CPF")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
@@ -57,7 +76,18 @@ public class ColaboradorController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ColaboradorResponse get(@Parameter(description = "CPF do colaborador") @PathVariable String cpf) { return ColaboradorMapper.toResponse(service.findByCpf(cpf)); }
+=======
+    public ColaboradorResponse get(@PathVariable Long cpf) { return ColaboradorMapper.toResponse(service.findByCpf(cpf)); }
+>>>>>>> b91737a398d197c9a9584e9fbd38c840654268d0
 
+    @Operation(summary = "Criar um novo colaborador", description = "Cria um colaborador no sistema")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Colaborador criado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos — algum campo obrigatório está nulo"),
+        @ApiResponse(responseCode = "422", description = "Validation Error — campos inválidos"),
+        @ApiResponse(responseCode = "409", description = "Conflito — já existe um registro com este CPF"),
+        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
     @PostMapping
     @Operation(summary = "Criar colaborador", description = "Cria um novo colaborador")
     @ApiResponses({
@@ -75,7 +105,16 @@ public class ColaboradorController {
         return ResponseEntity.created(uri).body(resp);
     }
 
+    @Operation(summary = "Atualizar colaborador", description = "Atualiza os dados de um colaborador existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Colaborador atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "422", description = "Validation Error — campos inválidos"),
+        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
     @PutMapping("/{cpf}")
+<<<<<<< HEAD
     @Operation(summary = "Atualizar colaborador", description = "Atualiza dados de um colaborador")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
@@ -86,11 +125,21 @@ public class ColaboradorController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ColaboradorResponse update(@Parameter(description = "CPF do colaborador") @PathVariable String cpf, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados atualizados do colaborador") @Valid @RequestBody ColaboradorRequest req) {
+=======
+    public ColaboradorResponse update(@PathVariable Long cpf, @Valid @RequestBody ColaboradorRequest req) {
+>>>>>>> b91737a398d197c9a9584e9fbd38c840654268d0
         Colaborador updated = service.update(cpf, ColaboradorMapper.toEntity(req));
         return ColaboradorMapper.toResponse(updated);
     }
 
+    @Operation(summary = "Remover colaborador", description = "Remove um colaborador pelo CPF")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Colaborador removido com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
     @DeleteMapping("/{cpf}")
+<<<<<<< HEAD
     @Operation(summary = "Remover colaborador", description = "Remove um colaborador pelo CPF")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "No Content"),
@@ -98,6 +147,9 @@ public class ColaboradorController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ResponseEntity<Void> delete(@Parameter(description = "CPF do colaborador") @PathVariable String cpf) {
+=======
+    public ResponseEntity<Void> delete(@PathVariable Long cpf) {
+>>>>>>> b91737a398d197c9a9584e9fbd38c840654268d0
         service.delete(cpf);
         return ResponseEntity.noContent().build();
     }
