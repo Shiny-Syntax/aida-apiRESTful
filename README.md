@@ -3,10 +3,18 @@ Este projeto é uma **API RESTful** projetada para **gerenciar** colaboradores, 
 
 Se você deseja consultar a **API oficial da AIDA**, o **PET**, utilizada em produção e integrada à plataforma principal, clique [aqui](https://github.com/Shiny-Syntax/aida-apiRESTful-BackEnd).
 
+## Colaboradores
+### Turma 2ESPG
+| Nome | RM |
+|------|------|
+| Ana Laura | 554375 |
+| Ianny Raquel | 559096 |
+
 ## Como rodar e testar o projeto na sua máquina(recomendado)
 ### PRÉ-REQUISITOS
 - [**Java 21+**](https://www.oracle.com/java/technologies/downloads/)
 - [**Maven 3.9.11+**](https://maven.apache.org/download.cgi)
+
 ### PASSO A PASSO
 **1.** **Clone o repositório**
 
