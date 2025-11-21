@@ -56,7 +56,7 @@ public class AgendaController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Agenda não encontrada"),
+        @ApiResponse(responseCode = "404", description = "Agenda not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
@@ -67,7 +67,7 @@ public class AgendaController {
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Created"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Collaborator not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
@@ -88,7 +88,7 @@ public class AgendaController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Agenda ou colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Agenda or collaborator not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
@@ -106,7 +106,7 @@ public class AgendaController {
     @Operation(summary = "Remover agenda", description = "Remove agenda por id")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "No Content"),
-        @ApiResponse(responseCode = "404", description = "Agenda não encontrada"),
+        @ApiResponse(responseCode = "404", description = "Agenda not found"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ResponseEntity<Void> delete(@Parameter(description = "ID da agenda") @PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }

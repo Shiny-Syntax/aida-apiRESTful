@@ -25,6 +25,6 @@ public enum Modalidade {
                 return m;
             }
         }
-        throw new BadRequestException("Valor de modalidade inválido: " + label);
+        throw new BadRequestException("Invalid modality value: " + label);
     }
 }

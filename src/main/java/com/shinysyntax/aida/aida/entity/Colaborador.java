@@ -3,6 +3,7 @@ package com.shinysyntax.aida.aida.entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -40,12 +41,12 @@ public class Colaborador {
     private LocalDate dataAdmissao;
 
     @Lob
-    @Column(columnDefinition = "CLOB DEFAULT 'NÃO POSSUI PROBLEMAS DE SAÚDE'")
-    private String problemaSaude = "NÃO POSSUI PROBLEMAS DE SAÚDE";
+    @Column(columnDefinition = "CLOB DEFAULT 'NO HEALTH ISSUES'")
+    private String problemaSaude = "NO HEALTH ISSUES";
 
     @Lob
-    @Column(columnDefinition = "CLOB DEFAULT 'NÃO FAZ USO DE MEDICAMENTO CONTROLADO'")
-    private String medicamentoUsoDiario = "NÃO FAZ USO DE MEDICAMENTO CONTROLADO";
+    @Column(columnDefinition = "CLOB DEFAULT 'NO REGULAR USE OF CONTROLLED MEDICATION'")
+    private String medicamentoUsoDiario = "NO REGULAR USE OF CONTROLLED MEDICATION";
 
     @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -57,8 +58,8 @@ public class Colaborador {
 
     public Colaborador() {
         // ensure default values on entity level as well
-        if (this.problemaSaude == null) this.problemaSaude = "NÃO POSSUI PROBLEMAS DE SAÚDE";
-        if (this.medicamentoUsoDiario == null) this.medicamentoUsoDiario = "NÃO FAZ USO DE MEDICAMENTO CONTROLADO";
+        if (this.problemaSaude == null) this.problemaSaude = "NO HEALTH ISSUES";
+        if (this.medicamentoUsoDiario == null) this.medicamentoUsoDiario = "NO REGULAR USE OF CONTROLLED MEDICATION";
     }
 
     // getters and setters

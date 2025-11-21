@@ -56,7 +56,7 @@ public class RegistroDiarioController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Registro não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Record not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
@@ -67,7 +67,7 @@ public class RegistroDiarioController {
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Created"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Collaborator not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
@@ -76,7 +76,10 @@ public class RegistroDiarioController {
         String cpf = Objects.requireNonNull(req.getColaboradorCpf(), "colaboradorCpf must not be null");
         Colaborador c = colaboradorRepository.findById(cpf)
             .orElseThrow(() -> new ColaboradorNotFoundException("Colaborador not found: " + cpf));
-        RegistroDiario saved = service.create(RegistroDiarioMapper.toEntity(req, c));
+        RegistroDiario toSave = RegistroDiarioMapper.toEntity(req, c);
+        // system-controlled date: always set to current date
+        toSave.setDataRegistro(java.time.LocalDate.now());
+        RegistroDiario saved = service.create(toSave);
         RegistroDiarioResponse resp = RegistroDiarioMapper.toResponse(Objects.requireNonNull(saved));
         URI uri = URI.create("/api/registros/" + resp.getId());
         Objects.requireNonNull(uri);
@@ -88,7 +91,7 @@ public class RegistroDiarioController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Registro ou colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Record or collaborator not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
@@ -106,7 +109,7 @@ public class RegistroDiarioController {
     @Operation(summary = "Remover registro", description = "Remove registro diário por id")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "No Content"),
-        @ApiResponse(responseCode = "404", description = "Registro não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Record not found"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ResponseEntity<Void> delete(@Parameter(description = "ID do registro") @PathVariable Long id) { service.delete(id); return ResponseEntity.noContent().build(); }

@@ -16,7 +16,7 @@ public class RegistroDiarioMapper {
 
         RegistroDiario r = new RegistroDiario();
 
-        r.setDataRegistro(req.getDataRegistro());
+        // dataRegistro agora é definida pelo sistema no controller (não a partir do request)
         r.setEscalaEmocional(req.getEscalaEmocional());
         r.setTempoTela(req.getTempoTela());
         r.setPausasRealizadas(req.getPausasRealizadas());

@@ -52,7 +52,7 @@ public class ColaboradorController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Collaborator not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
@@ -80,7 +80,7 @@ public class ColaboradorController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Collaborator not found"),
         @ApiResponse(responseCode = "422", description = "Validation Error"),
         @ApiResponse(responseCode = "409", description = "Conflict - data integrity"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
@@ -94,7 +94,7 @@ public class ColaboradorController {
     @Operation(summary = "Remover colaborador", description = "Remove um colaborador pelo CPF")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "No Content"),
-        @ApiResponse(responseCode = "404", description = "Colaborador não encontrado"),
+        @ApiResponse(responseCode = "404", description = "Collaborator not found"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ResponseEntity<Void> delete(@Parameter(description = "CPF do colaborador") @PathVariable String cpf) {

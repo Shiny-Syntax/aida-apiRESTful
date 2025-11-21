@@ -25,7 +25,6 @@ public class RegistroDiarioServiceImpl implements RegistroDiarioService {
         Objects.requireNonNull(id, "id must not be null");
         Objects.requireNonNull(registro, "registro must not be null");
         RegistroDiario existing = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Registro not found"));
-        existing.setDataRegistro(registro.getDataRegistro());
         existing.setEscalaEmocional(registro.getEscalaEmocional());
         existing.setTempoTela(registro.getTempoTela());
         existing.setPausasRealizadas(registro.getPausasRealizadas());

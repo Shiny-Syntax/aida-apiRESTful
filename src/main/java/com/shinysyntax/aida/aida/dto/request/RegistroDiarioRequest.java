@@ -1,20 +1,16 @@
 package com.shinysyntax.aida.aida.dto.request;
 
-import java.time.LocalDate;
-
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class RegistroDiarioRequest {
     
 
-    @NotNull(message = "dataRegistro é obrigatório")
-    private LocalDate dataRegistro;
+    // dataRegistro é controlada pelo sistema (definida no momento da criação)
 
-    @Min(value = 0, message = "escalaEmocional mínimo é 0")
-    @Max(value = 9, message = "escalaEmocional máximo é 9")
+    @Min(value = 0, message = "escalaEmocional must be at least 0")
+    @Max(value = 9, message = "escalaEmocional must be at most 9")
     private Integer escalaEmocional;
 
     private Integer tempoTela;
@@ -22,13 +18,10 @@ public class RegistroDiarioRequest {
     private String observacoesColaborador;
     private String observacoesAIDA;
 
-    @NotBlank(message = "colaboradorCpf é obrigatório")
+    @NotBlank(message = "colaboradorCpf is required")
     private String colaboradorCpf;
 
     // getters and setters
-
-    public LocalDate getDataRegistro() { return dataRegistro; }
-    public void setDataRegistro(LocalDate dataRegistro) { this.dataRegistro = dataRegistro; }
     public Integer getEscalaEmocional() { return escalaEmocional; }
     public void setEscalaEmocional(Integer escalaEmocional) { this.escalaEmocional = escalaEmocional; }
     public Integer getTempoTela() { return tempoTela; }

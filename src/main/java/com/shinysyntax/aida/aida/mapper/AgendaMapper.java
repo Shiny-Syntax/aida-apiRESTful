@@ -10,10 +10,11 @@ public class AgendaMapper {
     public static Agenda toEntity(AgendaRequest req, Colaborador colaborador) {
         if (req == null) return null;
         Agenda a = new Agenda();
-        a.setId(req.getId());
         a.setTipo(req.getTipo());
         a.setDescricao(req.getDescricao());
-        a.setDataHora(req.getDataHora());
+        // dataHora é definida pelo sistema no momento da criação (setada em service.create)
+        // dataEntrega é fornecida pelo usuário
+        a.setDataEntrega(req.getDataEntrega());
         // map prioridade and status safely
         if (req.getPrioridade() != null) {
             a.setPrioridade(com.shinysyntax.aida.aida.enums.Priority.fromLabel(req.getPrioridade()));
@@ -33,6 +34,7 @@ public class AgendaMapper {
         r.setTipo(a.getTipo());
         r.setDescricao(a.getDescricao());
         r.setDataHora(a.getDataHora());
+        r.setDataEntrega(a.getDataEntrega());
         r.setPrioridade(a.getPrioridade() == null ? null : a.getPrioridade().getLabel());
         r.setPlataforma(a.getPlataforma());
         r.setStatus(a.getStatus() == null ? null : a.getStatus().getLabel());

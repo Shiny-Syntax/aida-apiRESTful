@@ -1,5 +1,6 @@
 package com.shinysyntax.aida.aida.dto.response;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AgendaResponse {
@@ -10,6 +11,7 @@ public class AgendaResponse {
     private String prioridade;
     private String plataforma;
     private String status;
+    private LocalDate dataEntrega;
     private String colaboradorCpf;
     private String colaboradorNome;
 
@@ -28,6 +30,8 @@ public class AgendaResponse {
     public void setPlataforma(String plataforma) { this.plataforma = plataforma; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public LocalDate getDataEntrega() { return dataEntrega; }
+    public void setDataEntrega(LocalDate dataEntrega) { this.dataEntrega = dataEntrega; }
     public String getColaboradorCpf() { return colaboradorCpf; }
     public void setColaboradorCpf(String colaboradorCpf) { this.colaboradorCpf = colaboradorCpf; }
     public String getColaboradorNome() { return colaboradorNome; }

@@ -28,6 +28,7 @@ public class Agenda {
     private String descricao;
 
     private LocalDateTime dataHora;
+    private java.time.LocalDate dataEntrega;
 
     @jakarta.persistence.Convert(converter = com.shinysyntax.aida.aida.converter.PriorityConverter.class)
     @Column(length = 20)
@@ -60,4 +61,6 @@ public class Agenda {
     public void setStatus(com.shinysyntax.aida.aida.enums.AgendaStatus status) { this.status = status; }
     public Colaborador getColaborador() { return colaborador; }
     public void setColaborador(Colaborador colaborador) { this.colaborador = colaborador; }
+    public java.time.LocalDate getDataEntrega() { return dataEntrega; }
+    public void setDataEntrega(java.time.LocalDate dataEntrega) { this.dataEntrega = dataEntrega; }
 }

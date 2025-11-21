@@ -26,6 +26,6 @@ public enum AgendaStatus {
                 return s;
             }
         }
-        throw new BadRequestException("Valor de status inválido: " + label);
+        throw new BadRequestException("Invalid status value: " + label);
     }
 }

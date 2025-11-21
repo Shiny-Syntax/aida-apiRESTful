@@ -26,6 +26,6 @@ public enum Priority {
                 return p;
             }
         }
-        throw new BadRequestException("Valor de prioridade inválido: " + label);
+        throw new BadRequestException("Invalid priority value: " + label);
     }
 }
